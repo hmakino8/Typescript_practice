@@ -1,0 +1,18 @@
+npm・・・node package manager
+
+npm run build (トランスパイル)
+npm run watch (監視モード)
+node dist/xxx.js (ファイル実行)
+
+srcディレクトリ内にtsファイル作成 & 作業
+↓
+srcのtsファイルをjsファイルにトランスパイル
+↓
+トランスパイルされたjsファイルはdistファイルに保存される
+↓
+ファイル実行
+
+※監視モード時はtsファイルで変更された内容は常にjsファイルに反映される
+
+npm install
+package.json, tsconfig.jsonの設定ファイルを元にpackage-lock.jsonファイルが作成される。
