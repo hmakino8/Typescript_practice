@@ -1,7 +1,7 @@
 enum SIZEEnum {
-	'Small',
-	'Medium',
-	'Large'
+  'Small',
+  'Medium',
+  'Large'
 }
 
 console.log(SIZEEnum.Large)

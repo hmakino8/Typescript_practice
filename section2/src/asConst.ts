@@ -1,6 +1,6 @@
 const memberAC = {
-	name: 'aaa',
-	age: 31
+  name: 'aaa',
+  age: 31
 } as const
 
 //memberAC.name = 'bbb'

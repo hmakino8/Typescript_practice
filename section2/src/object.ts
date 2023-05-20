@@ -1,9 +1,9 @@
 const objectTest: {
-	name: String,
-	age: number
+  name: String,
+  age: number
 } = {
-	name: 'aaa',
-	age: 31
+  name: 'aaa',
+  age: 31
 }
 
 console.log(objectTest.name)

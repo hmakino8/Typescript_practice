@@ -1,23 +1,23 @@
 type MemberType = {
-	name: string,
-	age: number
+  name: string,
+  age: number
 }
 
 const menberT: MemberType = {
-	name: 'aaa',
-	age: 31
+  name: 'aaa',
+  age: 31
 }
 
 type MemberHobby = {
-	hobby: string
+  hobby: string
 }
 
 type MemberProfile = MemberType & MemberHobby
 
 const memberInfo: MemberProfile = {
-	name: 'hmakino',
-	age: 31,
-	hobby: 'soccer'
+  name: 'hmakino',
+  age: 31,
+  hobby: 'soccer'
 }
 
 console.log(memberInfo.hobby)

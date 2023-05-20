@@ -1,12 +1,12 @@
 const SIZE = {
-	SMALL: 'S',
-	MEDIUM: 'M',
-	LARGE: 'L'
+  SMALL: 'S',
+  MEDIUM: 'M',
+  LARGE: 'L'
 } as const
 
 type Person = {
-	name: string,
-	price: number
+  name: string,
+  price: number
 }
 type PersonKey = keyof Person;
 type BookKey = "title" | 'prince' | 'rating'
@@ -15,7 +15,7 @@ console.log(PersonKey)
 type SizeType = keyof typeof SIZE
 
 const sizeCheck = (size: SizeType) => {
-	console.log(size)
+  console.log(size)
 }
 
 sizeCheck('SMALL')
