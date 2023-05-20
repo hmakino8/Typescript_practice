@@ -1,1 +1,1 @@
-{"version":3,"file":"readonly.js","sourceRoot":"","sources":["../src/readonly.ts"],"names":[],"mappings":"AAKA,MAAM,OAAO,GAAgB;IAC5B,IAAI,EAAE,KAAK;IACX,GAAG,EAAE,EAAE;CACP,CAAA;AAED,sBAAsB"}
+{"version":3,"file":"readonly.js","sourceRoot":"","sources":["../src/readonly.ts"],"names":[],"mappings":";AAKA,MAAM,OAAO,GAAgB;IAC3B,IAAI,EAAE,KAAK;IACX,GAAG,EAAE,EAAE;CACR,CAAA;AAED,sBAAsB"}

@@ -4,14 +4,6 @@ const SIZE = {
   LARGE: 'L'
 } as const
 
-type Person = {
-  name: string,
-  price: number
-}
-type PersonKey = keyof Person;
-type BookKey = "title" | 'prince' | 'rating'
-console.log(PersonKey)
-
 type SizeType = keyof typeof SIZE
 
 const sizeCheck = (size: SizeType) => {
@@ -23,3 +15,9 @@ sizeCheck('LARGE')
 
 // value
 type ValueOfSize = typeof SIZE[keyof typeof SIZE]
+
+const sizeCheck2 = (size: ValueOfSize) => {
+  console.log(size)
+}
+
+sizeCheck2('S')
