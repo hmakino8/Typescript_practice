@@ -1,4 +1,4 @@
-// easy
+//easy
 {
   let isShow: boolean = true;
   let isEditing: boolean = false;
@@ -118,4 +118,117 @@
   type NumberOrString = number | string;
   const num: NumberOrString = 1;
   const str: NumberOrString = "1";
+}
+{
+  type Fruit = "apple" | "orange" | "lemon";
+
+  const fruit1: Fruit = "apple";
+  const fruit2: Fruit = "orange";
+  const fruit3: Fruit = "lemon";
+}
+{
+  type Person = {
+    readonly name: string,
+    readonly age: number,
+    readonly email: string
+  };
+}
+{
+  // 型アサーション
+  const LANGUAGE = {
+    ENGLISH: "ENGLISH" as const,
+    JAPANESE: "JAPANESE" as const,
+    CHINESE: "CHINESE" as const
+  };
+
+  console.log(LANGUAGE.JAPANESE);
+}
+{
+  let isShow = true;
+  let count = 15;
+  const firstName = 'tarou';
+  const sports = ["tennis", "soccer"];
+  const user = {id: 1, name: "jiro"};
+
+  type IsShow = typeof isShow;
+  type Count = typeof count;
+  type FirstName = typeof firstName;
+  type User = typeof user;
+}
+{
+  const func = (x: unknown) => {
+    const str: string = x as string;
+    const num: number = x as number;
+    const bool: boolean = x as boolean;
+  };
+}
+{
+  // nullを含まない型をアサーション
+  const func1 = (x: string | null) => {
+    const str: string = x!;
+  }
+}
+{
+  // 型ガード(nullでない場合のみメソッドを実行する)
+  const func1 = (x: string | null) => {
+    console.log(x?.length);
+  };
+  const func2 = (x: number | undefined) => {
+    console.log(x?.toString());
+  };
+}
+{
+  type Person = {
+    name?: string,
+    age?: number,
+    email?: string
+  };
+
+  // オブジェクト型のプロパティを全て必須にする。
+  const person: Required<Person> = {
+    name: "hoge",
+    age: 30,
+    email: "hoge@fuga.com"
+  };
+
+  // Person型からnameプロパティを抜き出した新しい型を宣言
+  type Name = Pick<Person, "name">;
+
+  // Person型からnameプロパティを除いた新しい方を宣言
+  type NewPerson = Omit<Person, "name">;
+
+  // Person型の全てのプロパティをReadonlyを使って変更不可にする
+  type PersonReadonly = Readonly<Person>;
+}
+{
+  // 共通の型を抜き出す
+  type TypeA = number | string | null;
+  type TypeB = number | number[] | null;
+
+  type NewType = Extract<TypeA, TypeB>;
+}
+{
+  // 特定の型を除外する
+  type TypeA = number | string | null;
+
+  type NewType = Exclude<TypeA, string>;
+}
+{ // 関数の引数の型を取得する
+  const func = (a: string, b: string) => {
+    return a + b;
+  }
+
+  type TypeA = Parameters<typeof func>;
+}
+{
+  // 関数の戻り値の型を取得
+  const func = () => {
+    return {
+      name: "taro",
+      age: 25,
+      email: "taro@example.com"
+    }
+  }
+
+  type Person = ReturnType<typeof func>;
 }
