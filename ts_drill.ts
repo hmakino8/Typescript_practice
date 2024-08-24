@@ -1,4 +1,4 @@
-//easy
+// EASY
 {
   let isShow: boolean = true;
   let isEditing: boolean = false;
@@ -231,4 +231,189 @@
   }
 
   type Person = ReturnType<typeof func>;
+}
+
+// NORMAL
+{
+  type Tuple = [number, null, string];
+  const nums: Tuple = [1, null, "Hello"];
+}
+{
+  // 引数、戻り値なしのコールバック関数と数値のsecondを引数に持ち、string型を返す関数の型宣言
+  type Func = {
+    (func: ()=>void, second: number): string;
+  };
+}
+{ // プロミスの戻り値の型
+  const func = (): Promise<boolean>  => {
+    return new Promise((resolve) => {
+      resolve(true)
+    });
+  }
+}
+{ // User型のオブジェクトと複数のPost型のオブジェクトを持つUserWithPosts型を定義する
+  type User = {
+    id: string,
+    name: string,
+  };
+
+  type Post = {
+    id: string,
+    title: string,
+    content: string,
+  };
+
+  type UserWithPosts = User & { posts: Post[] };
+
+  const userWithPosts: UserWithPosts = {
+    id: "aaa",
+    name: "bob",
+    posts: [
+      {
+        id: "aaa",
+        title: "hoge",
+        content: "fuga"
+      },
+      {
+        id: "bbb",
+        title: "hoge2",
+        content: "fuga2"
+      }
+    ]
+  };
+}
+{
+  type Post = {
+    id: string,
+    title: string,
+    index: number
+  };
+
+  type Comments = {
+    id: string,
+    title: string,
+    content: string,
+    wordCount: number
+  };
+
+  type PostWithComments = Post & { comments: Comments[] };
+
+  const postWithComments: PostWithComments = {
+    id: "aaa",
+    title: "testPost",
+    index: 1,
+    comments: [
+      {
+        id: "aaa",
+        title: "hoge",
+        content: "fuga",
+        wordCount: 4
+      },
+      {
+        id: "bbb",
+        title: "hoge2",
+        content: "fuga2",
+        wordCount: 4
+      }
+    ]
+  };
+}
+{ /*
+     boolean型に読み取り専用を適用する
+
+     Readonly<T>は配列やオブジェクトなど、変更可能な方に対して意味を持つ。
+     イミュータブルなプリミティブ型には実質的に効果がない。
+  */
+  type TodoInput = {
+    id: string,
+    name: string,
+    dueDate?: string,
+    isDone: Readonly<boolean>
+  };
+}
+{ // userオブジェクトのキーをユニオン型に変換する
+  const user = {id: 3, name: "bob"};
+  type UserKey = keyof typeof user; // "id" | "bob"
+}
+{
+  const user = {id: 3, name: "bob"} as const;
+  // {readonly id: 3, readonly name: "bob"}
+  type UserKey = keyof typeof user; // "id" | "name"
+  // typeof user -> {readonly id: 3, readonly name: "bob"}
+  // keyof typeof user -> "id" | "name"
+  type UserValue = typeof user[UserKey]; // "bob" | 3
+  // typeof user[UserKey] -> UserKey型に対応するuserオブジェクトのプロパティの値
+}
+{
+  const fruits = ["apple", "orange", "lemon"] as const;
+  type FruitsType = typeof fruits[number]; // number -> インデックス型アクセス演算子
+  // "apple" | "orange" | "lemon"
+}
+{
+  type CurriculumLanguage = "JavaScript" | "TypeScript" | "React" | "Go";
+
+  const printLearningLanguage = (lang: CurriculumLanguage) => {
+  switch (lang) {
+      case "JavaScript":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "TypeScript":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "React":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "Go":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      default:
+        const neverValue: never = lang;
+        throw new Error(`${lang}はカリキュラムにない言語です`);
+    }
+  }
+  //printLearningLanguage("C" as CurriculumLanguage);
+}
+{
+  type CurriculumLanguage = "JavaScript" | "TypeScript" | "React" | "Go";
+
+  class ExhaustiveError extends Error {
+    constructor(value: never, message = `${value}はカリキュラムにない言語です`) {
+      super(message);
+    }
+  }
+
+  const printLearningLanguage = (lang: CurriculumLanguage) => {
+  switch (lang) {
+      case "JavaScript":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "TypeScript":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "React":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      case "Go":
+        console.log(`I'm learnig ${lang}`);
+        break;
+      default:
+         throw new ExhaustiveError(lang);
+    }
+  }
+  //printLearningLanguage("C" as CurriculumLanguage);
+}
+{
+  const func1 = (x: string | number) => {
+    console.log(x.toString());
+    if (typeof x === "string") {
+      console.log(x.length);
+    };
+  };
+
+  const func2 = (x: number | number[]) => {
+    console.log(x.toString());
+    //if (typeof x === "number[]") {
+      //console.log(x.map((x) => x*2));
+    //};
+  };
 }
