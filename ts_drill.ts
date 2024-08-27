@@ -404,16 +404,187 @@
 }
 {
   const func1 = (x: string | number) => {
-    console.log(x.toString());
     if (typeof x === "string") {
       console.log(x.length);
-    };
+    } else {
+      console.log(x.toString);
+    }
   };
 
   const func2 = (x: number | number[]) => {
     console.log(x.toString());
-    //if (typeof x === "number[]") {
-      //console.log(x.map((x) => x*2));
-    //};
+    if (typeof x === "number") {
+      console.log(x.toString());
+    } else {
+      console.log(x.map((x) => x*2));
+    }
+  };
+}
+{ // プロパティが存在するか確認して型ガード
+  type Person = {
+    name: string,
+    age: number,
+    email?: string
+  };
+
+  const getEmail = (person: Person): string | undefined => {
+    if ("email" in person)
+    return person.email;
+  };
+}
+{
+  type Success = { isSuccess: true, message: string};
+  type Failure = { isSuccess: false, error: string};
+
+  const res = ( res: Success | Failure ) => {
+    if (res.isSuccess) {
+      console.log(res.message);
+    } else {
+      console.error(res.error);
+    };
+  };
+}
+{
+  const func = async() => {
+    try {
+      await fetch("http://a.com");
+    } catch (error) {
+      if (typeof error === "object") {
+        console.error(error);
+      };
+    };
+  };
+}
+{ // オブジェクトを指定して型ガード
+  const func = async() => {
+    try {
+      await fetch("http://a.com");
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      };
+    };
+  };
+}
+{ /*
+    typeofはプリミティブ型に対して使用されるのに対し、
+    instanceofはオブジェクト型が特定のクラスまたはコンストラクタ関数によって
+    作成されたかどうかを判定する。
+  */
+  class HttpError extends Error {
+    status?: number = 404; // エラーコードに関連しないエラーもあるのでオプショナルにする
+  };
+
+  const func = async() => {
+    try{
+      await fetch("http://a.com")
+    } catch(error) {
+      if (error instanceof HttpError && error.status === 404) {
+          console.log(error.status);
+        };
+    };
+  }
+}
+{ // 型ガード(クラスが特定のクラスによって作成されたか&クラスのメンバが存在するかを確認)
+  class HttpError extends Error {
+    status?: number;
+  }
+
+  const func = async() => {
+    try {
+      await fetch("http://a.com")
+    } catch (error) {
+      if (error instanceof HttpError && "status" in error) {
+        console.error(error.status);
+      }
+    }
+  }
+}
+{
+  const getString = (x: unknown): x is string => {
+    return typeof x === "string";
+  }
+
+  const func = (x: unknown): string => {
+    if (getString(x)) {
+      return x
+    } else {
+      return "";
+    }
+  }
+}
+{
+  type Person = {
+    name: string,
+    age: number,
+    email: string
+  };
+
+  type NewPersonProps = Pick<Person, "name" | "age">; // 特定のプロパティをピックアップ
+  type NewPersonProps2 = Omit<Person, "name" | "email">; // 特定のプロパティを除外
+  type NewPersonProps3 = Readonly<Pick<Person, "name" | "email">>; // 特定のプロパティを変更不可にする
+  type NewPersonProps4 = Partial<Pick<Person, "name" | "age">>; // 特定のプロパティをオプショナルにする
+  type NewPersonProps5 = Readonly<Omit<Person, "email">>; // 特定のプロパティを除去し、変更不可にする
+}
+{
+  type Person = {
+    firstName: string,
+    lastName: string,
+    age: string,
+    email: string,
+    address: string
+  };
+  // type Person = Record<"firstName" | "lastName" | "age" | "email" | "address", string>;
+
+  type PersonName = Pick<Person, "firstName" | "lastName">;
+  type PersonInfo = Omit<Person, keyof PersonName>;
+}
+{ // インデックス型を定義
+  let stringNumberObject: { [age: string]: number };
+  let stringNumberObject2: Record<string, number>;
+}
+{ // in演算子のマッピング型
+  type Keys = "javascript" | "python";
+  type Obj = {[key in Keys]: string}; // keyは実際の変数ではなく、型レベルで使用される抽象的な名前。
+}
+{
+  type Data<T> = {
+    id: number,
+    payload: T,
+  };
+
+  const data1: Data<number> = {
+    id: 1,
+    payload: 2
+  };
+
+  const data2: Data<string> = {
+    id: 1,
+    payload: "hoge"
+  };
+
+  const data3: Data<{name: string}> = {
+    id: 1,
+    payload: {
+      name: "bob"
+    }
+  };
+}
+{
+  type Data<T> = {id: number, message: T};
+}
+{
+  function func<T>(x: T): T {
+    return x;
+  };
+}
+{ // T型にPerson型を追加
+  type Person = {
+    name: string,
+    age: number,
+  }
+
+  const getAge = <T extends Person>(person: T): number => {
+    return person.age;
   };
 }
